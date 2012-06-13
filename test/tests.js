@@ -23,7 +23,7 @@ function createDocument( iframe, insertions ) {
 	doc.close();
 }
 
-module("noConflict", {
+module("srcDoc.noConflict()", {
 	teardown: function() {
 		// Restore srcDoc to the global
 		window.srcDoc = this._srcDoc;
@@ -47,7 +47,7 @@ test("will restore original value", 3, function() {
 	equal(this._srcDoc, preNoConflict, "Returns a reference to the API");
 });
 
-module("Explicit shimming", {
+module("srcDoc.set()", {
 	setup: function() {
 		this.$harness = $("<iframe>").appendTo("#qunit-fixture");
 	},
