@@ -33,7 +33,9 @@ module("noConflict", {
 	}
 });
 
-test("will restore original value", 2, function() {
+test("will restore original value", 3, function() {
+
+	var preNoConflict = srcDoc;
 
 	equal(typeof window.srcDoc, "object",
 		"srcDoc has been overwritten to an object");
@@ -42,6 +44,7 @@ test("will restore original value", 2, function() {
 	this._srcDoc = window.srcDoc.noConflict();
 
 	equal(window.srcDoc, "old", "srcDoc has been restored to the old value");
+	equal(this._srcDoc, preNoConflict, "Returns a reference to the API");
 });
 
 module("Explicit shimming", {
