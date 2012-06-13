@@ -56,7 +56,7 @@ module("srcDoc.set()", {
 	}
 });
 
-test("set content (as explicitly specified) of src-less iFrame", function() {
+test("set content (as explicitly specified) of src-less iFrame", 1, function() {
 
 	var $harness = this.$harness;
 	var content = "Hey there, <b>world</b>";
@@ -74,7 +74,7 @@ test("set content (as explicitly specified) of src-less iFrame", function() {
 
 });
 
-test("set content (as explicitly specified) of src-ful iFrame", function() {
+test("set content (as explicitly specified) of src-ful iFrame", 1, function() {
 
 	var $harness = this.$harness;
 	var content = {
@@ -97,7 +97,7 @@ test("set content (as explicitly specified) of src-ful iFrame", function() {
 	$harness.attr("src", content.src);
 });
 
-test("set content (as inferred from current `srcdoc` attribute) of src-less iFrame", function() {
+test("set content (as inferred from current `srcdoc` attribute) of src-less iFrame", 1, function() {
 
 	var $harness = this.$harness;
 	var content = "Hey there, <b>world</b>";
@@ -119,7 +119,7 @@ test("set content (as inferred from current `srcdoc` attribute) of src-less iFra
 
 });
 
-test("set content (as inferred from current `srcdoc` attribute) of src-ful iFrame", function() {
+test("set content (as inferred from current `srcdoc` attribute) of src-ful iFrame", 1, function() {
 
 	var $harness = this.$harness;
 	var content = {
@@ -162,7 +162,7 @@ module("Automatic shimming", {
 	}
 });
 
-test("iFrame declaring src only", function() {
+test("iFrame declaring src only", 1, function() {
 	var src = "javascript: 'Hello, <b>world</b>'";
 	var regex = /Hello, <b>world<\/b>/i;
 	var $harness = this.$harness;
@@ -180,7 +180,7 @@ test("iFrame declaring src only", function() {
 	createDocument(this.$harness[0], { src: src });
 });
 
-test("iFrame declaring both src and srcdoc", function() {
+test("iFrame declaring both src and srcdoc", 1, function() {
 	var $harness = this.$harness;
 	var src = "javascript: 'Hello, <b>world</b>'";
 	var srcdoc = "<head><title>This is a title</title></head><body>Mike</body>";
@@ -199,7 +199,7 @@ test("iFrame declaring both src and srcdoc", function() {
 	createDocument(this.$harness[0], { src: src, srcdoc: srcdoc });
 });
 
-test("iFrame declaring srcdoc only", function() {
+test("iFrame declaring srcdoc only", 1, function() {
 	
 	var $harness = this.$harness;
 	var srcdoc = "<head><title>This is a title</title></head><body>Mike</body>";
