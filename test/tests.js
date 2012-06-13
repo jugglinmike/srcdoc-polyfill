@@ -26,10 +26,10 @@ function createDocument( iframe, insertions ) {
 module("noConflict", {
 	teardown: function() {
 		// Restore srcDoc to the global
-		window.srcDoc = window._srcDoc;
+		window.srcDoc = this._srcDoc;
 
 		// Remove the global reference
-		delete window._srcDoc;
+		delete this._srcDoc;
 	}
 });
 
@@ -39,7 +39,7 @@ test("will restore original value", 2, function() {
 		"srcDoc has been overwritten to an object");
 
 	// Restore to old srcDoc, and keep a copy of srcDoc in window._srcDoc
-	window._srcDoc = window.srcDoc.noConflict();
+	this._srcDoc = window.srcDoc.noConflict();
 
 	equal(window.srcDoc, "old", "srcDoc has been restored to the old value");
 });
