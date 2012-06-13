@@ -1,7 +1,7 @@
 (function( window, document, undefined ) {
 	
 	var idx, iframes;
-	var _srcDoc = window._srcDoc;
+	var _srcDoc = window.srcDoc;
 	var isCompliant = !!("srcdoc" in document.createElement("iframe"));
 	var implementations = {
 		compliant: function( iframe, content ) {
