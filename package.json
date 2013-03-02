@@ -1,0 +1,26 @@
+{
+  "name": "srcdoc-polyfill",
+  "version": "0.1.1-beta",
+  "description": "A shim for the iFrame \"srcdoc\" attribute",
+  "main": "srcdoc-polyfill.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "grunt qunit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jugglinmike/srcdoc-polyfill.git"
+  },
+  "keywords": [
+    "html5",
+    "polyfill",
+    "iframe"
+  ],
+  "author": "Mike Pennisi",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.3.17"
+  }
+}
