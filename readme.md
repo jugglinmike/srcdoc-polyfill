@@ -68,6 +68,13 @@ The shim's tests are written in QUnit, and can be run by visiting the
 `test/index.html` file in the browser, or by running `grunt test` from the
 command line.
 
+## Release Notes
+
+- `0.1.1` (2013-03-01)
+  - Allow content length to exceed the limit browsers impose on URLs
+- `0.1.0` (2012-06-13)
+  - Initial release
+
 ## License
 
 Copyright (c) 2012 Mike Pennisi  
