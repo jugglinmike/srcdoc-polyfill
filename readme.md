@@ -12,6 +12,9 @@ script-targeted URLs, i.e.
 
 	<iframe src="javascript: '<html><body>Hello, <b>world</b>.</body></html>'"></iframe>
 
+(Because of limitations on URL length, the actual mechanism that the polyfill
+implements not quite this direct.)
+
 For more on `srcdoc`, see [the WhatWG specification](http://www.whatwg.org/specs/web-apps/current-work/multipage/the-iframe-element.html#attr-iframe-srcdoc) and [this post on
 Bocoup.com](http://weblog.bocoup.com/third-party-javascript-development-future/).
 

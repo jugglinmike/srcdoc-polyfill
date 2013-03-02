@@ -20,16 +20,15 @@
 
 			if (!content) {
 				content = iframe.getAttribute("srcdoc");
+			} else {
+				iframe.setAttribute("srcdoc", content);
 			}
 
 			if (content) {
-
-				// Create a "javascript: " URL. Wrap the content in quotes and
-				// escape unsafe characters (this is in addition to any
-				// escaping already done to sanitize the `srcdoc` attribute)
-				jsUrl = "javascript: '" +
-					content.replace(/([\\'])/g, "\\$1") +
-					"'";
+				// The value returned by a script-targeted URL will be used as
+				// the iFrame's content. Create such a URL which returns the
+				// iFrame element's `srcdoc` attribute.
+				jsUrl = "javascript: window.frameElement.getAttribute('srcdoc');";
 
 				iframe.setAttribute("src", jsUrl);
 

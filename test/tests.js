@@ -153,6 +153,30 @@ test("set content (as inferred from current `srcdoc` attribute) of src-ful iFram
 
 });
 
+/* Issue #2: Content length limited to 4080 chars in Internet Explorer
+ * Browsers enforce limits on the length of URLs (for instance, Internet
+ * Explorer 8 does not support URLs longer than 2,083 characters in length[1].
+ * Ensure that srcDoc operates even in cases where the content is far longer
+ * than the maximum-allowed URL length.
+ */
+test("set content longer than 4020 characters in length", 1, function() {
+
+	var $harness = this.$harness;
+	var content = new Array(5001).join("M");
+	var regex = /M{5000}/i;
+
+	stop();
+
+	$harness.one("load", function() {
+		ok(regex.test($harness.contents().children().html()),
+			"The iFrame contains the specified content");
+		start();
+	});
+
+	srcDoc.set($harness.get(0), content);
+
+});
+
 module("Automatic shimming", {
 	setup: function() {
 		this.$harness = $("<iframe>").appendTo("#qunit-fixture");
