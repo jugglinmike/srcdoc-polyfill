@@ -6,8 +6,8 @@ instance:
 
 	<iframe srcdoc="<html><body>Hello, <b>world</b>.</body></html>"></iframe>
 
-As of June 2012, this feature is not available in any (stable) browsers.
-Fortunately, most of today's browsers support similar functionality through
+This feature only began to see adoption in major browsers in early 2013.
+Fortunately, most older browsers support similar functionality through
 script-targeted URLs, i.e.
 
 	<iframe src="javascript: '<html><body>Hello, <b>world</b>.</body></html>'"></iframe>
@@ -41,15 +41,16 @@ The shim also defines a `srcDoc` variable in the global scope:
 Tested in the following browsers:
 
 * Microsoft Internet Explorer
-  * 6, 7, 8, 9, 10.0.8102.0 (developer preview)
+  * 6, 7, 8, 9, 10
 * Safari
   * 4, 5.0, 5.1
 * Google Chrome
-  * 14, 15, 16, 17, 18, 19, 20
+  * 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24.0.1312.5 (beta), 25.0.1364.5
+    (dev)
 * Opera
-  * 11.1, 11.5, 11.6, 12 (beta)
+  * 11.1, 11.5, 11.6, 12.10, 12.11 (beta)
 * Mozilla FireFox
-  * 3.6, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 (beta)
+  * 3.0, 3.6, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 (beta)
 
 The following browsers are *not* supported:
 
