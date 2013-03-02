@@ -20,13 +20,13 @@ module.exports = function(grunt) {
 		concat: {
 			dist: {
 				src: ['<banner:meta.banner>', '<file_strip_banner:srcdoc-polyfill.js>'],
-				dest: 'srcdoc-polyfill-<%= meta.version %>.min.js'
+				dest: 'srcdoc-polyfill.min.js'
 			}
 		},
 		min: {
 			dist: {
 				src: ['<banner:meta.banner>', '<config:concat.dist.dest>'],
-				dest: 'srcdoc-polyfill-<%= meta.version %>.min.js'
+				dest: 'srcdoc-polyfill.min.js'
 			}
 		},
 		watch: {
