@@ -177,6 +177,26 @@ test("set content longer than 4020 characters in length", 1, function() {
 
 });
 
+test("set content with non-ASCII characters", 1, function() {
+
+	var $harness = this.$harness;
+	var special = String.fromCharCode(1601);
+	var content = "<head><meta charset='UTF-8'></head><body>" + special +
+		"</body>";
+	var regex = new RegExp(special);
+
+	stop();
+
+	$harness.one("load", function() {
+		ok(regex.test($harness.contents().children().html()),
+			"The iFrame contains the specified content");
+		start();
+	});
+
+	srcDoc.set($harness.get(0), content);
+
+});
+
 module("Automatic shimming", {
 	setup: function() {
 		this.$harness = $("<iframe>").appendTo("#qunit-fixture");
