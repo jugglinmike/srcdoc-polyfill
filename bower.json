@@ -1,0 +1,22 @@
+{
+  "name": "srcdoc-polyfill",
+  "main": "srcdoc-polyfill.js",
+  "version": "0.1.1",
+  "homepage": "https://github.com/jugglinmike/srcdoc-polyfill",
+  "authors": [
+    "Mike Pennisi <mike@mikepennisi.com>"
+  ],
+  "description": "A shim for the iFrame \"srcdoc\" attribute",
+  "keywords": [
+    "srcdoc",
+    "html5",
+    "polyfill"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ]
+}
