@@ -9,19 +9,7 @@ module.exports = function(grunt) {
 		jshint: {
 			files: ["Gruntfile.js", "srcdoc-polyfill.js"],
 			options: {
-				curly: true,
-				eqeqeq: true,
-				immed: true,
-				latedef: true,
-				newcap: true,
-				noarg: true,
-				sub: true,
-				undef: true,
-				boss: true,
-				eqnull: true,
-				browser: true,
-				// The shim relies on script URLs to function
-				scripturl: true
+				jshintrc: ".jshintrc"
 			}
 		},
 		qunit: {
