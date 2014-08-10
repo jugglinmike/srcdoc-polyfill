@@ -1,5 +1,6 @@
 /*global module:false*/
 module.exports = function(grunt) {
+	grunt.loadTasks('build');
 
 	// Project configuration.
 	grunt.initConfig({
@@ -7,13 +8,37 @@ module.exports = function(grunt) {
 			pkg: grunt.file.readJSON("package.json")
 		},
 		jshint: {
-			files: ["Gruntfile.js", "srcdoc-polyfill.js"],
-			options: {
-				jshintrc: ".jshintrc"
+			build: {
+				src: ["Gruntfile.js", "build/*.js"],
+				options: {
+					jshintrc: "build/.jshintrc"
+				}
+			},
+			src: {
+				src: ["srcdoc-polyfill.js"],
+				options: {
+					jshintrc: ".jshintrc"
+				}
 			}
 		},
 		qunit: {
 			files: ["test/**/*.html"]
+		},
+		"saucelabs-qunit": {
+			all: {
+				options: {
+					username: "srcdoc-polyfill",
+					testname: "srcdoc polyfill",
+					build: process.env.CI_BUILD_NUMBER,
+					urls: ["http://localhost:8023/test/index.html"],
+					browsers: [{
+						browserName: 'firefox',
+					}, {
+						browserName: 'firefox',
+						version: 19
+					}]
+				}
+			}
 		},
 		uglify: {
 			options: {
@@ -37,10 +62,13 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks("grunt-contrib-jshint");
 	grunt.loadNpmTasks("grunt-contrib-qunit");
+	grunt.loadNpmTasks("grunt-saucelabs");
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 
-	grunt.registerTask("test", ["jshint", "qunit"]);
+	grunt.registerTask("test-unit", ["qunit"]);
+	grunt.registerTask("test-integration", ["server:8023", "saucelabs-qunit"]);
+	grunt.registerTask("ci", ["jshint", "test-unit", "test-integration"]);
 	// Default task.
-	grunt.registerTask("default", ["test", "uglify"]);
+	grunt.registerTask("default", ["jshint", "test-unit"]);
 
 };

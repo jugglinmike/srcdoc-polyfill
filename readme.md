@@ -65,7 +65,7 @@ details on installing grunt.
 ## Tests
 
 The shim's tests are written in QUnit, and can be run by visiting the
-`test/index.html` file in the browser, or by running `grunt test` from the
+`test/index.html` file in the browser, or by running `grunt test-unit` from the
 command line.
 
 ## Release Notes
