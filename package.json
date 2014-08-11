@@ -21,6 +21,7 @@
   "author": "Mike Pennisi",
   "license": "MIT",
   "devDependencies": {
+    "bluebird": "^2.2.2",
     "grunt": "~0.4.0",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-qunit": "~0.2.0",
