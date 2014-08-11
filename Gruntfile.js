@@ -31,6 +31,7 @@ module.exports = function(grunt) {
 					name: 'srcdoc-polyfill',
 					key: process.env.SAUCE_ACCESS_KEY
 				},
+				buildNumber: process.env.TRAVIS_JOB_ID,
 				timeout: 1800,
 				platforms: [
 					[["Windows 7", "firefox", "27"]]

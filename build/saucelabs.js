@@ -80,7 +80,7 @@ function closeTunnel(tunnel) {
 	});
 }
 
-function scheduleTests(creds, port, platforms, tunnelId) {
+function scheduleTests(creds, port, buildNumber, platforms, tunnelId) {
 	var body = JSON.stringify({
 		platforms: platforms,
 		url: "http://localhost:" + port + "/test/index.html",
@@ -91,6 +91,7 @@ function scheduleTests(creds, port, platforms, tunnelId) {
 		hostname: "saucelabs.com",
 		path: "/rest/v1/" + creds.name + "/js-tests",
 		method: "POST",
+		build: buildNumber,
 		auth: creds.name + ":" + creds.key,
 		headers: {
 			"Content-Type": "application/json",
@@ -186,6 +187,7 @@ module.exports = function(grunt) {
 			var creds = this.data.credentials;
 			var platforms = this.data.platforms;
 			var timeout = this.data.timeout;
+			var buildNumber = this.data.buildNumber;
 			var done = this.async();
 			var tunnel, tunnelId, server;
 
@@ -230,7 +232,9 @@ module.exports = function(grunt) {
 						"Requesting Sauce Labs unit test job."
 					);
 
-					return scheduleTests(creds, port, platforms, tunnelId);
+					return scheduleTests(
+						creds, port, buildNumber, platforms, tunnelId
+					);
 				}).then(function(ids) {
 					grunt.log.verbose.writeln("Waiting for tests to complete");
 
