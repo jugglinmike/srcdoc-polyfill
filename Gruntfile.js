@@ -33,9 +33,7 @@ module.exports = function(grunt) {
 				},
 				buildNumber: process.env.TRAVIS_JOB_ID,
 				timeout: 1800,
-				platforms: [
-					[["Windows 7", "firefox", "27"]]
-				]
+				platforms: require('./build/test-browsers')
 			}
 		},
 		uglify: {
@@ -65,7 +63,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask("test-unit", ["qunit"]);
 	grunt.registerTask("test-integration", ["saucelabs"]);
-	grunt.registerTask("ci", ["jshint", "test-unit", "test-integration"]);
+	grunt.registerTask("ci", ["default", "test-integration"]);
 
 	// Default task.
 	grunt.registerTask("default", ["jshint", "test-unit"]);
