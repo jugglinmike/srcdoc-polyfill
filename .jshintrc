@@ -10,5 +10,9 @@
   "boss": true,
   "eqnull": true,
   "browser": true,
-  "scripturl": true
+  "scripturl": true,
+  "globals": {
+    "define": false,
+    "exports": false
+  }
 }

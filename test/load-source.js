@@ -10,6 +10,31 @@
 			setup: function(done) {
 				done();
 			}
+		},
+		// Ensure that the global variable is defined even in AMD-supporting
+		// environments.
+		amdGlobal: {
+			prereqs: ["../node_modules/requirejs/require.js"],
+			setup: function(done) {
+				require(["../srcdoc-polyfill"], function(srcDoc) {
+					done();
+				});
+			}
+		},
+		amdModule: {
+			prereqs: ["../node_modules/requirejs/require.js"],
+			setup: function(done) {
+				require(["../srcdoc-polyfill"], function(srcDoc) {
+					window.srcDoc = srcDoc;
+					done();
+				});
+			}
+		},
+		cjs: {
+			prereqs: ["cjs-built.js"],
+			setup: function(done) {
+				done();
+			}
 		}
 	};
 
@@ -35,7 +60,7 @@
 		var sourceName = "global";
 		params.forEach(function(param) {
 			var parts = param.split("=");
-			if (parts[0] === "testSource") {
+			if (parts[0] === "moduleFmt") {
 				sourceName = parts[1];
 			}
 		});

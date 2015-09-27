@@ -25,7 +25,14 @@ iFrames which declare a `srcdoc` attribute attribute) will receive this
 "shimmed" behavior. (In browsers that already implement this functionality, no
 change will take place.)
 
-The shim also defines a `srcDoc` variable in the global scope:
+## Executing
+
+This script may be consumed as a AMD module, a CommonJS module, or standalone
+via direct inclusion with a `<script>` element.
+
+## API
+
+The shim also defines a minimal JavaScript API:
 
 * `srcDoc.set( iframe [, content] )` - sets the content of the provided iFrame
   element using the `srcdoc` attribute where available (falling back on a

@@ -1,7 +1,21 @@
-(function( window, document, undefined ) {
-	
-	var idx, iframes;
+(function(root, factory) {
+	// `root` does not resolve to the global window object in a Browserified
+	// bundle, so a direct reference to that object is used instead.
 	var _srcDoc = window.srcDoc;
+
+	if (typeof define === "function" && define.amd) {
+		define(['exports'], function(exports) {
+			factory(exports, _srcDoc);
+			root.srcDoc = exports;
+		});
+	} else if (typeof exports === "object") {
+		factory(exports, _srcDoc);
+	} else {
+		root.srcDoc = {};
+		factory(root.srcDoc, _srcDoc);
+	}
+})(this, function(exports, _srcDoc) {
+	var idx, iframes;
 	var isCompliant = !!("srcdoc" in document.createElement("iframe"));
 	var implementations = {
 		compliant: function( iframe, content ) {
@@ -42,13 +56,12 @@
 			}
 		}
 	};
-	var srcDoc = window.srcDoc = {
-		// Assume the best
-		set: implementations.compliant,
-		noConflict: function() {
-			window.srcDoc = _srcDoc;
-			return srcDoc;
-		}
+	var srcDoc = exports;
+	// Assume the best
+	srcDoc.set = implementations.compliant;
+	srcDoc.noConflict = function() {
+		window.srcDoc = _srcDoc;
+		return srcDoc;
 	};
 
 	// If the browser supports srcdoc, no shimming is necessary
@@ -66,4 +79,4 @@
 		srcDoc.set( iframes[idx] );
 	}
 
-}( this, this.document ));
+});

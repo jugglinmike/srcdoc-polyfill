@@ -20,9 +20,16 @@ module.exports = function(grunt) {
 				}
 			},
 			test: {
-				src: ["test/*.js"],
+				src: ["test/*.js", "!test/cjs-built.js"],
 				options: {
 					jshintrc: "test/.jshintrc"
+				}
+			}
+		},
+		browserify: {
+			test: {
+				files: {
+					"test/cjs-built.js": ["test/cjs-src.js"]
 				}
 			}
 		},
@@ -35,10 +42,25 @@ module.exports = function(grunt) {
 			}
 		},
 		qunit: {
-			exportsGlobal: {
+			moduleFmtGlobal: {
 				options: {
 					urls: [
-						"http://localhost:8023/test/index.html?testSource=global"
+						"http://localhost:8023/test/index.html?moduleFmt=global"
+					]
+				}
+			},
+			moduleFmtAmd: {
+				options: {
+					urls: [
+						"http://localhost:8023/test/index.html?moduleFmt=amdModule",
+						"http://localhost:8023/test/index.html?moduleFmt=amdGlobal"
+					]
+				}
+			},
+			moduleFmtCjs: {
+				options: {
+					urls: [
+						"http://localhost:8023/test/index.html?moduleFmt=cjs"
 					]
 				}
 			}
@@ -63,12 +85,13 @@ module.exports = function(grunt) {
 		}
 	});
 
+	grunt.loadNpmTasks("grunt-browserify");
 	grunt.loadNpmTasks("grunt-contrib-jshint");
 	grunt.loadNpmTasks("grunt-contrib-connect");
 	grunt.loadNpmTasks("grunt-contrib-qunit");
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 
-	grunt.registerTask("test", ["jshint", "connect", "qunit"]);
+	grunt.registerTask("test", ["jshint", "browserify", "connect", "qunit"]);
 	// Default task.
 	grunt.registerTask("default", ["test", "uglify"]);
 
