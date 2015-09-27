@@ -7,9 +7,23 @@ module.exports = function(grunt) {
 			pkg: grunt.file.readJSON("package.json")
 		},
 		jshint: {
-			files: ["Gruntfile.js", "srcdoc-polyfill.js"],
-			options: {
-				jshintrc: ".jshintrc"
+			build: {
+				src: ["Gruntfile.js"],
+				options: {
+					jshintrc: ".jshintrc"
+				}
+			},
+			source: {
+				src: ["srcdoc-polyfill.js"],
+				options: {
+					jshintrc: ".jshintrc"
+				}
+			},
+			test: {
+				src: ["test/*.js"],
+				options: {
+					jshintrc: "test/.jshintrc"
+				}
 			}
 		},
 		qunit: {
