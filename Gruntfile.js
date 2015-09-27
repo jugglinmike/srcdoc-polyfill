@@ -26,8 +26,22 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+		connect: {
+			server: {
+				options: {
+					port: 8023,
+					base: "."
+				}
+			}
+		},
 		qunit: {
-			files: ["test/**/*.html"]
+			exportsGlobal: {
+				options: {
+					urls: [
+						"http://localhost:8023/test/index.html?testSource=global"
+					]
+				}
+			}
 		},
 		uglify: {
 			options: {
@@ -50,10 +64,11 @@ module.exports = function(grunt) {
 	});
 
 	grunt.loadNpmTasks("grunt-contrib-jshint");
+	grunt.loadNpmTasks("grunt-contrib-connect");
 	grunt.loadNpmTasks("grunt-contrib-qunit");
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 
-	grunt.registerTask("test", ["jshint", "qunit"]);
+	grunt.registerTask("test", ["jshint", "connect", "qunit"]);
 	// Default task.
 	grunt.registerTask("default", ["test", "uglify"]);
 

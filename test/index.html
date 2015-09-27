@@ -8,19 +8,25 @@
         <link rel="stylesheet" href="../node_modules/qunitjs/qunit/qunit.css" />
         <script src="../node_modules/qunitjs/qunit/qunit.js"></script>
         <script src="lib/jquery-1.7.2.js"></script>
+        <script>QUnit.config.autostart = false;</script>
 
         <!-- Used for noConflict testing -->
         <script>window.srcDoc = "old";</script>
 
-        <!-- Source files -->
-        <script src="../srcdoc-polyfill.js"></script>
+        <script src="load-source.js"></script>
     </head>
     <body>
         <div id="qunit"></div>
 
-		<div id="qunit-fixture"></div>
+        <div id="qunit-fixture"></div>
 
         <!-- Test files -->
         <script src="tests.js"></script>
+
+        <script>
+            loadSource(location, function() {
+                QUnit.start();
+            });
+        </script>
     </body>
 </html>
