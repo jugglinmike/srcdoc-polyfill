@@ -23,7 +23,7 @@ function createDocument( iframe, insertions ) {
 	doc.close();
 }
 
-module("srcDoc.noConflict()", {
+QUnit.module("srcDoc.noConflict()", {
 	teardown: function() {
 		// Restore srcDoc to the global
 		window.srcDoc = this._srcDoc;
@@ -33,21 +33,21 @@ module("srcDoc.noConflict()", {
 	}
 });
 
-test("will restore original value", 3, function() {
+QUnit.test("will restore original value", 3, function(assert) {
 
 	var preNoConflict = srcDoc;
 
-	equal(typeof window.srcDoc, "object",
+	assert.equal(typeof window.srcDoc, "object",
 		"srcDoc has been overwritten to an object");
 
 	// Restore to old srcDoc, and keep a copy of srcDoc in window._srcDoc
 	this._srcDoc = window.srcDoc.noConflict();
 
-	equal(window.srcDoc, "old", "srcDoc has been restored to the old value");
-	equal(this._srcDoc, preNoConflict, "Returns a reference to the API");
+	assert.equal(window.srcDoc, "old", "srcDoc has been restored to the old value");
+	assert.equal(this._srcDoc, preNoConflict, "Returns a reference to the API");
 });
 
-module("srcDoc.set()", {
+QUnit.module("srcDoc.set()", {
 	setup: function() {
 		this.$harness = $("<iframe>").appendTo("#qunit-fixture");
 	},
@@ -56,25 +56,25 @@ module("srcDoc.set()", {
 	}
 });
 
-test("set content (as explicitly specified) of src-less iFrame", 1, function() {
+QUnit.test("set content (as explicitly specified) of src-less iFrame", 1, function(assert) {
 
 	var $harness = this.$harness;
 	var content = "Hey there, <b>world</b>";
 	var regex = /Hey there, <b>world<\/b>/i;
+	var done = assert.async();
 
-	stop();
 
 	$harness.one("load", function() {
-		ok(regex.test($harness.contents().children().html()),
+		assert.ok(regex.test($harness.contents().children().html()),
 			"The iFrame contains the specified content");
-		start();
+		done();
 	});
 	
 	srcDoc.set($harness.get(0), content);
 
 });
 
-test("set content (as explicitly specified) of src-ful iFrame", 1, function() {
+QUnit.test("set content (as explicitly specified) of src-ful iFrame", 1, function(assert) {
 
 	var $harness = this.$harness;
 	var content = {
@@ -82,44 +82,44 @@ test("set content (as explicitly specified) of src-ful iFrame", 1, function() {
 		src: "javascript: 'Hey there, <b>world</b>'"
 	};
 	var regex = /<head>\s*<title>\s*Hello down there!\s*<\/title>\s*<\/head>/i;
-
-	stop();
+	var done = assert.async();
 
 	$harness.one("load", function() {
 		$harness.one("load", function() {
-			ok(regex.test($harness.contents().children().html()),
+			assert.ok(regex.test($harness.contents().children().html()),
 				"The iFrame contains the specified content");
-			start();
+			done();
 		});
 		srcDoc.set($harness.get(0), content.srcdoc);
 	});
 
 	$harness.attr("src", content.src);
+
 });
 
-test("set content (as inferred from current `srcdoc` attribute) of src-less iFrame", 1, function() {
+QUnit.test("set content (as inferred from current `srcdoc` attribute) of src-less iFrame", 1, function(assert) {
 
 	var $harness = this.$harness;
 	var content = "Hey there, <b>world</b>";
 	var regex = /Hey there, <b>world<\/b>/i;
+	var done = assert.async();
 
-	stop();
 
 	// Will trigger a "load" event in compliant browsers, so set it before
 	// binding
 	$harness.attr("srcdoc", content);
 
 	$harness.one("load", function() {
-		ok(regex.test($harness.contents().children().html()),
+		assert.ok(regex.test($harness.contents().children().html()),
 			"The iFrame contains the specified content");
-		start();
+		done();
 	});
 
 	srcDoc.set($harness.get(0));
 
 });
 
-test("set content (as inferred from current `srcdoc` attribute) of src-ful iFrame", 1, function() {
+QUnit.test("set content (as inferred from current `srcdoc` attribute) of src-ful iFrame", 1, function(assert) {
 
 	var $harness = this.$harness;
 	var content = {
@@ -127,8 +127,7 @@ test("set content (as inferred from current `srcdoc` attribute) of src-ful iFram
 		src: "javascript: 'Mark'"
 	};
 	var regex = /Hey there, <b>world<\/b>/i;
-
-	stop();
+	var done = assert.async();
 
 	// Will trigger a "load" event in compliant browsers, so set it before
 	// binding
@@ -139,9 +138,9 @@ test("set content (as inferred from current `srcdoc` attribute) of src-ful iFram
 
 		$harness.one("load", function() {
 
-			ok(regex.test($harness.contents().children().html()),
+			assert.ok(regex.test($harness.contents().children().html()),
 				"The iFrame contains the specified content");
-			start();
+			done();
 
 		});
 
@@ -159,25 +158,24 @@ test("set content (as inferred from current `srcdoc` attribute) of src-ful iFram
  * Ensure that srcDoc operates even in cases where the content is far longer
  * than the maximum-allowed URL length.
  */
-test("set content longer than 4020 characters in length", 1, function() {
+QUnit.test("set content longer than 4020 characters in length", 1, function(assert) {
 
 	var $harness = this.$harness;
 	var content = new Array(5001).join("M");
 	var regex = /M{5000}/i;
-
-	stop();
+	var done = assert.async();
 
 	$harness.one("load", function() {
-		ok(regex.test($harness.contents().children().html()),
+		assert.ok(regex.test($harness.contents().children().html()),
 			"The iFrame contains the specified content");
-		start();
+		done();
 	});
 
 	srcDoc.set($harness.get(0), content);
 
 });
 
-module("Automatic shimming", {
+QUnit.module("Automatic shimming", {
 	setup: function() {
 		this.$harness = $("<iframe>").appendTo("#qunit-fixture");
 	},
@@ -186,57 +184,53 @@ module("Automatic shimming", {
 	}
 });
 
-test("iFrame declaring src only", 1, function() {
+QUnit.test("iFrame declaring src only", 1, function(assert) {
 	var src = "javascript: 'Hello, <b>world</b>'";
 	var regex = /Hello, <b>world<\/b>/i;
 	var $harness = this.$harness;
-
-	stop();
+	var done = assert.async();
 
 	this.$harness.on("load", function() {
-		ok(regex.test(
+		assert.ok(regex.test(
 			$harness.contents().children().find("iframe")
 				.contents().children().html()),
 			"Does not modify iFrame");
-		start();
+		done();
 	});
 
 	createDocument(this.$harness[0], { src: src });
 });
 
-test("iFrame declaring both src and srcdoc", 1, function() {
+QUnit.test("iFrame declaring both src and srcdoc", 1, function(assert) {
 	var $harness = this.$harness;
 	var src = "javascript: 'Hello, <b>world</b>'";
 	var srcdoc = "<head><title>This is a title</title></head><body>Mike</body>";
 	var regex = /^<head>\s*<title>This is a title<\/title>\s*<\/head>\s*<body>\s*Mike\s*<\/body>$/i;
-
-	stop();
+	var done = assert.async();
 
 	this.$harness.on("load", function() {
-		ok(regex.test(
+		assert.ok(regex.test(
 			$harness.contents().children().find("iframe")
 				.contents().children().html()),
 			"Correctly sets the content of iFrame");
-		start();
+		done();
 	});
 
 	createDocument(this.$harness[0], { src: src, srcdoc: srcdoc });
 });
 
-test("iFrame declaring srcdoc only", 1, function() {
-	
+QUnit.test("iFrame declaring srcdoc only", 1, function(assert) {
 	var $harness = this.$harness;
 	var srcdoc = "<head><title>This is a title</title></head><body>Mike</body>";
 	var regex = /^<head>\s*<title>This is a title<\/title>\s*<\/head>\s*<body>\s*Mike\s*<\/body>$/i;
-
-	stop();
+	var done = assert.async();
 
 	this.$harness.on("load", function() {
-		ok(regex.test(
+		assert.ok(regex.test(
 			$harness.contents().children().find("iframe")
 				.contents().children().html()),
 			"Correctly sets the content of iFrame");
-		start();
+		done();
 	});
 
 	createDocument(this.$harness[0], { srcdoc: srcdoc });
