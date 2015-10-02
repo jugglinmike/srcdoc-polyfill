@@ -77,6 +77,9 @@ command line.
 
 ## Release Notes
 
+- `0.2.0` (2015-10-02)
+  - Wrap in "UMD" pattern, enabling more natural consumption from CommonJS and
+    AMD environments
 - `0.1.1` (2013-03-01)
   - Allow content length to exceed the limit browsers impose on URLs
 - `0.1.0` (2012-06-13)
