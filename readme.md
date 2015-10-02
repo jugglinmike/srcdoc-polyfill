@@ -1,4 +1,4 @@
-# `srcdoc` polyfill
+# `srcdoc` polyfill [![Build Status](https://travis-ci.org/jugglinmike/srcdoc-polyfill.svg)](https://travis-ci.org/jugglinmike/srcdoc-polyfill)
 
 HTML5 defines a new attribute for iFrames named	`srcdoc`. This attribute allows
 developers to specify an iFrame's content in-line with the iFrame itself. For
