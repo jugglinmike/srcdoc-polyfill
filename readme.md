@@ -25,6 +25,16 @@ iFrames which declare a `srcdoc` attribute attribute) will receive this
 "shimmed" behavior. (In browsers that already implement this functionality, no
 change will take place.)
 
+**Note on [the HTML5 `sandbox`
+attribute](https://html.spec.whatwg.org/multipage/embedded-content.html#attr-iframe-sandbox):**
+Because the shim operates using a script-targeted URL in legacy environments,
+some configurations of the `sandbox` attribute may interfere with its behavior.
+This issue will only surface in environments that implement `sandbox` but that
+do *not* implement `srcdoc`. Because of this, this polyfill's default behavior
+is to issue a warning for potentially-hazardous configurations but to proceed
+optimistically. The API supports an `force` option that enables modification of
+this behavior.
+
 ## Executing
 
 This script may be consumed as a AMD module, a CommonJS module, or standalone
@@ -34,11 +44,22 @@ via direct inclusion with a `<script>` element.
 
 The shim also defines a minimal JavaScript API:
 
-* `srcDoc.set( iframe [, content] )` - sets the content of the provided iFrame
-  element using the `srcdoc` attribute where available (falling back on a
-  script-targeted URL in non-supporting browsers). The desired content of the
-  iFrame may optionally be specified. If blank, the current value of the
-  element's `srcdoc` attribute will be referenced for content.
+* `srcDoc.set( iframe [, content [, options ] ] )` - sets the content of the
+  provided iFrame element using the `srcdoc` attribute where available (falling
+  back on a script-targeted URL in non-supporting browsers).
+  * `content` (optional) - The desired content of the iFrame. If blank, the
+    current value of the element's `srcdoc` attribute will be referenced for
+    content.
+  * `options` (optional) - An object used to specify low-level behavior.
+    Supports a single attribute, `force`, for controlling behavior in the
+    presence of the `sandbox` attribute (see the note in "Usage" section of
+    this document).
+    * If unspecified, a warning will be issued and the library will attempt to
+      shim the `srcdoc` behavior optimistically.
+    * If `true`, then the target iFrame's `sandbox` attribute will be removed
+      prior to setting the content. Note that this
+    * If `false`, no warning will be issued and the library will attempt to
+      shim the `srcdoc` behavior optimistically.
 * `srcDoc.noConflict()` - Sets the value of the global `srcDoc` variable to its
   original value. Returns the `srcDoc` object defined by this project for
   re-aliasing.

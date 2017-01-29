@@ -42,6 +42,9 @@ module.exports = function(grunt) {
 			}
 		},
 		qunit: {
+			options: {
+				console: false
+			},
 			moduleFmtGlobal: {
 				options: {
 					urls: [

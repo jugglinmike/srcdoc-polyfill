@@ -175,6 +175,92 @@ QUnit.test("set content longer than 4020 characters in length", 1, function(asse
 
 });
 
+QUnit.test("iFrame specifying `sandbox=''`", 1, function(assert) {
+	var $harness = this.$harness;
+	var content = "<head><title>This is a title</title></head><body>Mike</body>";
+	var regex = /^<head>\s*<title>This is a title<\/title>\s*<\/head>\s*<body>\s*Mike\s*<\/body>$/i;
+	var done = assert.async();
+
+	$harness.attr("sandbox", "");
+
+	$harness.one("load", function() {
+		assert.ok($harness.attr("data-srcdoc-polyfill"));
+		done();
+	});
+
+	srcDoc.set($harness.get(0), content);
+});
+
+QUnit.test("iFrame specifying `sandbox='allow-same-origin'`", 2, function(assert) {
+	var $harness = this.$harness;
+	var content = "<head><title>This is a title</title></head><body>Mike</body>";
+	var regex = /^<head>\s*<title>This is a title<\/title>\s*<\/head>\s*<body>\s*Mike\s*<\/body>$/i;
+	var done = assert.async();
+
+	$harness.attr("sandbox", "allow-same-origin");
+
+	$harness.one("load", function() {
+		assert.ok(regex.test($harness.contents().children().html()),
+			"The iFrame contains the specified content");
+		assert.notOk($harness.attr("data-srcdoc-polyfill"));
+		done();
+	});
+
+	srcDoc.set($harness.get(0), content);
+});
+
+QUnit.test("iFrame specifying `sandbox='', `force` option enabled`", 2, function(assert) {
+	var $harness = this.$harness;
+	var content = "<head><title>This is a title</title></head><body>Mike</body>";
+	var regex = /^<head>\s*<title>This is a title<\/title>\s*<\/head>\s*<body>\s*Mike\s*<\/body>$/i;
+	var done = assert.async();
+
+	$harness.attr("sandbox", "");
+
+	$harness.one("load", function() {
+		assert.ok(regex.test($harness.contents().children().html()),
+			"The iFrame contains the specified content");
+		assert.notOk($harness.attr("data-srcdoc-polyfill"));
+		done();
+	});
+
+	srcDoc.set($harness.get(0), content, { force: true });
+});
+
+QUnit.test("iFrame specifying `sandbox='', `force` option disabled`", 1, function(assert) {
+	var $harness = this.$harness;
+	var content = "<head><title>This is a title</title></head><body>Mike</body>";
+	var regex = /^<head>\s*<title>This is a title<\/title>\s*<\/head>\s*<body>\s*Mike\s*<\/body>$/i;
+	var done = assert.async();
+
+	$harness.attr("sandbox", "");
+
+	$harness.one("load", function() {
+		assert.notOk($harness.attr("data-srcdoc-polyfill"));
+		done();
+	});
+
+	srcDoc.set($harness.get(0), content, { force: false });
+});
+
+QUnit.test("iFrame specifying `sandbox='', `force` option enabled`", 2, function(assert) {
+	var $harness = this.$harness;
+	var content = "<head><title>This is a title</title></head><body>Mike</body>";
+	var regex = /^<head>\s*<title>This is a title<\/title>\s*<\/head>\s*<body>\s*Mike\s*<\/body>$/i;
+	var done = assert.async();
+
+	$harness.attr("sandbox", "");
+
+	$harness.one("load", function() {
+		assert.ok(regex.test($harness.contents().children().html()),
+			"The iFrame contains the specified content");
+		assert.notOk($harness.attr("data-srcdoc-polyfill"));
+		done();
+	});
+
+	srcDoc.set($harness.get(0), content, { force: true });
+});
+
 QUnit.module("Automatic shimming", {
 	setup: function() {
 		this.$harness = $("<iframe>").appendTo("#qunit-fixture");
