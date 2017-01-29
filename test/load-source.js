@@ -41,8 +41,20 @@
 	function loadScript(script, done) {
 		var el = document.createElement("script");
 		el.src = script;
-		el.addEventListener("load", done);
-		document.head.appendChild(el);
+
+		if (el.addEventListener) {
+			el.addEventListener("load", done);
+		} else {
+			el.onreadystatechange = function() {
+				if ( done && (!this.readyState ||
+					this.readyState === "loaded" || this.readyState === "complete") ) {
+					done();
+					done = null;
+				}
+			};
+		}
+
+		document.getElementsByTagName('head')[0].appendChild(el);
 	}
 
 	function loadScripts(scripts, done) {
@@ -58,12 +70,14 @@
 	function getSource(search) {
 		var params = search.slice(1).split("&");
 		var sourceName = "global";
-		params.forEach(function(param) {
-			var parts = param.split("=");
+		var idx, length, parts;
+
+		for (idx = 0, length = params.length; idx < length; ++idx) {
+			parts = params[idx].split("=");
 			if (parts[0] === "moduleFmt") {
 				sourceName = parts[1];
 			}
-		});
+		}
 		return sourceName;
 	}
 
