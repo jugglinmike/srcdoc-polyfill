@@ -69,16 +69,18 @@ The shim also defines a minimal JavaScript API:
 Tested in the following browsers:
 
 * Microsoft Internet Explorer
-  * 6, 7, 8, 9, 10
-* Safari
-  * 4, 5.0, 5.1
+  * 6, 7, 8, 9, 10, 11
+* Microsoft Edge
+  * 13, 14
+* Apple Safari
+  * 4, 5.0, 5.1, 6, 6.2, 7.1, 8, 9.1, 10
 * Google Chrome
   * 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24.0.1312.5 (beta), 25.0.1364.5
-    (dev)
+    (dev), 55
 * Opera
-  * 11.1, 11.5, 11.6, 12.10, 12.11 (beta)
+  * 11.1, 11.5, 11.6, 12.10, 12.11 (beta), 42
 * Mozilla FireFox
-  * 3.0, 3.6, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 (beta)
+  * 3.0, 3.6, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 (beta), 50
 
 The following browsers are *not* supported:
 
