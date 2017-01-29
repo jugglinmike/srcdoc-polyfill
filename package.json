@@ -1,6 +1,6 @@
 {
   "name": "srcdoc-polyfill",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "A shim for the iFrame \"srcdoc\" attribute",
   "main": "srcdoc-polyfill.js",
   "directories": {

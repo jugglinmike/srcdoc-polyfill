@@ -100,6 +100,9 @@ command line.
 
 ## Release Notes
 
+- `1.0.0` (2017-01-29)
+  - Warn in the presence of the `sandbox` attribute if its value may cause
+    issues in environments that support it
 - `0.2.0` (2015-10-02)
   - Wrap in "UMD" pattern, enabling more natural consumption from CommonJS and
     AMD environments
